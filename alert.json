@@ -1,0 +1,53 @@
+{
+  "AlertDefinition" : 
+  	  {
+  	  	"service_name" : "AMBARI", 
+  	  	"component_name" : "AMBARI_AGENT",
+  	  	"name": "filesystem_max_use",
+        "label": "Local Filesystem Usage",
+        "description": "This alert is triggered when the filesystem usage at the path exceeds the threshold value.",
+        "interval": 1,
+        "scope": "SERVICE",
+        "enabled": true,
+        "source": {
+          "type": "SCRIPT",
+          "path": "volumeSpace.py",
+          "parameters" : [
+            {
+              "name": "monitor.path",
+              "display_name": "Filesystem to monitor",
+              "value": "/var/log",
+              "type": "STRING",
+              "description": "Folder to monitor for QUOTA"
+            },
+            {
+              "name": "percent.used.space.warning.threshold",
+              "display_name": "Filesystem Usage Warning",
+              "value": 60,
+              "type": "PERCENT",
+              "units": "%",
+              "description": "This warning is triggered if file system usage exceeds this value.",
+              "threshold": "WARNING"
+            },
+            {
+              "name": "percent.free.space.critical.threshold",
+              "display_name": "Filesystem Usage Critical",
+              "value": 80,
+              "type": "PERCENT",
+              "units": "%",
+              "description": "This critical alert is triggered if file system usage exceeds this value.",
+              "threshold": "CRITICAL"
+            },
+	    { 
+	      "name": "minimum.free.space",
+	      "display_name": "Filesystem Usage Critical",
+              "value": 5,
+              "type": "NUMERIC",
+              "units": "GByte",
+              "description": "The overall amount of free disk space left before a critical alert is triggered.",
+              "threshold": "CRITICAL"
+	    }
+          ]
+   	}
+      }
+}
